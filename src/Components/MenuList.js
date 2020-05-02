@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { Segment, Menu, Label } from 'semantic-ui-react';
+import { mapStateToProps, mapDispatchToProps } from '../Load';
 
-export default class MenuList extends Component {
+export class MenuList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -51,3 +52,7 @@ export default class MenuList extends Component {
         )
     }
 }
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MenuList);

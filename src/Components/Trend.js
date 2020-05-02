@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { Segment, Search, Table } from 'semantic-ui-react';
+import { mapStateToProps, mapDispatchToProps } from '../Load';
 
-export default class Trend extends Component {
+export class Trend extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,5 +56,8 @@ export default class Trend extends Component {
             </Segment>
         )
     }
-
 }
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Trend);
