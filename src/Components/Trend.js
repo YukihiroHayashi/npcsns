@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
-import { Segment, Search, Table } from 'semantic-ui-react';
+import { Segment, Dropdown, Table } from 'semantic-ui-react';
 import { mapStateToProps, mapDispatchToProps } from '../Load';
 
 export class Trend extends Component {
@@ -10,24 +10,47 @@ export class Trend extends Component {
         this.state = {
             searchText: "",
             searchIsLoading: false,
+            selectTrend: "",
         }
 
         this.trendSearch = this.trendSearch.bind(this);
+        this.changeTrend = this.changeTrend.bind(this);
     }
 
     trendSearch(evn, data) {
         this.setState({ searchText: data.value })
     }
 
+    changeTrend(evn, data) {
+        this.setState({ selectTrend: data.value })
+    }
+
     render() {
+        let trendOptions = [
+            {value: "", text: ""},
+            {value: "0422", text: "藤田大輝"},
+            {value: "0423", text: "林幸宏"},
+            {value: "0424", text: "有田健太郎"},
+            {value: "0425", text: "十川晴菜"},
+            {value: "0426", text: "渡辺大樹"},
+            {value: "0427", text: "西村歩美"},
+            {value: "vscode", text: "VS Code"},
+            {value: "java", text: "Java"},
+            {value: "springboot", text: "Spring Boot"},
+            {value: "react", text: "React"},
+            {value: ".netcore", text: ".Net Core"},
+        ]
+
         return (
             <Segment>
-                <Search
+                <Dropdown
+                    placeholder='ユーザー / タグ検索'
                     fluid
-                    loading={this.state.searchIsLoading}
-                    onSearchChange={this.trendSearch}
-                    value={this.state.searchText}
-                    placeholder="キーワード検索"
+                    search
+                    selection
+                    options={trendOptions}
+                    value={this.state.selectTrend}
+                    onChange={this.changeTrend}
                 />
                 <Table color="blue" fluid>
                     <Table.Header>

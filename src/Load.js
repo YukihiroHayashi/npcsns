@@ -26,7 +26,7 @@ export class Load extends Component {
         return (
             <div className="app">
                 <Header as='h2' className="header" color="blue">
-                    <Icon name='twitter' />
+                    <Icon name='send' />
                     <Header.Content>
                         NPC SNS
                         <Header.Subheader>For the future</Header.Subheader>
