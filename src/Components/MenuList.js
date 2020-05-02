@@ -28,25 +28,31 @@ export class MenuList extends Component {
                         name='Home'
                         active={this.state.activeMenu == "Home"}
                         onClick={this.menuClick}
-                    />
+                    >
+                        ホーム
+                    </Menu.Item>
                     <Menu.Item
                         name='Notifications'
                         active={this.state.activeMenu == "Notifications"}
                         onClick={this.menuClick}
                     >
                         <Label color='blue'>1</Label>
-                        Notifications
+                        通知
                     </Menu.Item>
                     <Menu.Item
                         name='Profile'
                         active={this.state.activeMenu == "Profile"}
                         onClick={this.menuClick}
-                    />
+                    >
+                        プロフィール
+                    </Menu.Item>
                     <Menu.Item
                         name='Draft'
                         active={this.state.activeMenu == "Draft"}
                         onClick={this.menuClick}
-                    />
+                    >
+                        下書き
+                    </Menu.Item>
                 </Menu>
             </Segment>
         )

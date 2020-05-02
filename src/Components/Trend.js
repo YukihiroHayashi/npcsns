@@ -27,11 +27,12 @@ export class Trend extends Component {
                     loading={this.state.searchIsLoading}
                     onSearchChange={this.trendSearch}
                     value={this.state.searchText}
+                    placeholder="キーワード検索"
                 />
                 <Table color="blue" fluid>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Recommended trends</Table.HeaderCell>
+                            <Table.HeaderCell>おすすめトレンド</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 
