@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+
+.app {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 2%;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu {
+  width: 30%;
+}
+
+.tweetList {
+  width: 50%;
+}
+
+.trend {
+  width: 20%;
+}

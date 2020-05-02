@@ -5,46 +5,54 @@ import AppConfig from './AppConfig'
 import Menu from './Components/Menu';
 import TweetList from './Components/TweetList';
 import Trend from './Components/Trend';
-import { Icon } from 'semantic-ui-react'
+import { Icon, Header, Divider } from 'semantic-ui-react';
+import './App.css';
 import * as TweetAction from './Actions/TweetAction';
 
 export class Load extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tweets:{},
+            tweets: {},
         }
-
     }
 
     componentDidMount() {
         let tweets = this.props.TweetAction.tweetFetchData(AppConfig.ApiUrlTweet);
-        this.setState({tweets: tweets});
+        this.setState({ tweets: tweets });
     }
 
+    render() {
+        let loadingInfo = this.props.TweetReducer.tweetsIsLoading ?
+            <div>
+                <Icon loading size='large' name='spinner' /> Loading Tweets...
+            </div> : "";
 
-
-    render(){
-        let loadingInfo = [];
-        if (this.props.TweetReducer.tweetsIsLoading) {
-            loadingInfo.push(
-                <div>
-                    <Icon loading size='large' name='spinner' /> Loading Tweets...
+        return (
+            <div className="app">
+                <Header as='h2' className="header" color="blue">
+                    <Icon name='twitter' />
+                    <Header.Content>
+                        NPC SNS
+                        <Header.Subheader>For the future</Header.Subheader>
+                    </Header.Content>
+                </Header>
+                <Divider />
+                {loadingInfo}
+                <div className="flex">
+                    <div className="menu">
+                        <Menu />
+                    </div>
+                    <div className="tweetList">
+                        <TweetList />
+                    </div>
+                    <div className="trend">
+                        <Trend />
+                    </div>
                 </div>
-            );
-        }
-        if (!loadingInfo.length) {
-            return (
-                <div className="App">
-                    <Menu />
-                    <TweetList />
-                    <Trend />
 
-                </div>
-            );
-        } else {
-            return <div>{loadingInfo}</div>;
-        }
+            </div>
+        );
     }
 
 }
