@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import AppConfig from './AppConfig'
-import Menu from './Components/Menu';
+import MenuList from './Components/MenuList';
 import TweetList from './Components/TweetList';
 import Trend from './Components/Trend';
 import { Icon, Header, Divider } from 'semantic-ui-react';
@@ -41,7 +41,7 @@ export class Load extends Component {
                 {loadingInfo}
                 <div className="flex">
                     <div className="menu">
-                        <Menu />
+                        <MenuList />
                     </div>
                     <div className="tweetList">
                         <TweetList />
