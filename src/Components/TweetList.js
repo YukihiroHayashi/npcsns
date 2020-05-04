@@ -7,7 +7,7 @@ import Tweet from "./Tweet";
 import TweetModel from "../Models/TweetModel";
 
 export default class TweetList extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             tweetModel: this.props.tweetModel ? Object.assign(Object.create(this.props.tweetModel), this.props.tweetModel)
@@ -39,7 +39,7 @@ export default class TweetList extends Component {
         }
 
         let tweetList = this.state.tweetList;
-        let newTweetList = [this.state.tweetText];    
+        let newTweetList = [this.state.tweetText];
         tweetList.push(newTweetList);
         this.setState({ 
             tweetList: tweetList,
@@ -49,14 +49,16 @@ export default class TweetList extends Component {
     }
 
     //ツイートテキストを変更したときに反映させる
-    onTextAreaChange(evn, data){
+    onTextAreaChange(evn, data) {
         this.setState({ tweetText: data.value });
     }
-    
-    render(){
-        return(
+
+    render() {
+        let props = this.props;
+
+        return (
             <Segment>
-                <div className = "tweetForm">
+                <div className="tweetForm">
                     <Form>
                         <label >
                             Tweet
@@ -66,20 +68,20 @@ export default class TweetList extends Component {
                             value={this.state.tweetText}
                             onChange={this.onTextAreaChange}
                         />
-                        <div style={{paddingTop: '10px',textAlign: 'right'}}>
-                            <Button 
+                        <div style={{ paddingTop: '10px', textAlign: 'right' }}>
+                            <Button
                                 onClick={this.onClickTweetButton}
                                 color = "blue"
                                 disabled={this.state.tweetButtonFlg}
                             >
-                            Tweet
+                                Tweet
                             </Button >
                         </div>
                     </Form>
                 </div>
-                <Tweet 
-                    tweetList = {this.state.tweetList} 
-                    userName = {this.state.userName}
+                <Tweet
+                    tweetList={this.state.tweetList}
+                    userName={this.state.userName}
                 />
             </Segment>
         )
