@@ -12,7 +12,7 @@ export default class TweetList extends Component {
             tweetId: "", //ツイートID　Load.jsから取得する予定
             userName: "watanabe", //ユーザ名　Load.jsから取得する予定
             tweetText: "",　//ツイートテキスト
-            tweetList: []
+            tweetList: ["疲れすぎワロタ"]
         };
 
         //バインド
@@ -26,8 +26,7 @@ export default class TweetList extends Component {
         const tweetList = this.state.tweetList;
         const newTweetList = [this.state.tweetText];    
         tweetList.push(newTweetList);
-        this.setState({ tweetList: tweetList });
-
+        this.setState({ tweetList: tweetList,tweetText: "" });
     }
 
     //ツイートテキストを変更したときに反映させる
@@ -36,7 +35,6 @@ export default class TweetList extends Component {
     }
     
     render(){
-    
         return(
             <Segment>
                 <div className = "tweetForm">
