@@ -2,18 +2,23 @@ import React, { Component } from 'react';
 import ReactDom from "react-dom";
 import { bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
-import { Segment, Form, TextArea, Button } from 'semantic-ui-react';
-import Tweet from './Tweet';
-import Trend from './Trend';
+import { Segment, Form, TextArea,Button } from 'semantic-ui-react';
+import Tweet from "./Tweet";
+import TweetModel from "../Models/TweetModel";
 
 export default class TweetList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            tweetModel: this.props.tweetModel ? Object.assign(Object.create(this.props.tweetModel), this.props.tweetModel)
+                : new TweetModel(), // Store clone
+
             tweetId: "", //ツイートID　Load.jsから取得する予定
             userName: "watanabe", //ユーザ名　Load.jsから取得する予定
             tweetText: "",　//ツイートテキスト
-            tweetList: ["疲れすぎワロタ"]
+            tweetList: ["疲れすぎワロタ"],
+            tweetButtonFlg: false,
+            errors:{}
         };
 
         //バインド
@@ -24,10 +29,23 @@ export default class TweetList extends Component {
 
     //ツイート内容をTweetListに表示させるようにしたい
     onClickTweetButton(evn, data) {
+        //ボタンの非活性
+        this.setState({ tweetButtonFlg: true}); 
+
+        //vaild
+        let errors = this.state.tweetModel.validate();
+        if (Object.keys(errors).length > 0) {
+            this.setState({ errors: errors, });
+        }
+
         let tweetList = this.state.tweetList;
         let newTweetList = [this.state.tweetText];
         tweetList.push(newTweetList);
-        this.setState({ tweetList: tweetList, tweetText: "" });
+        this.setState({ 
+            tweetList: tweetList,
+            tweetText: "" ,
+            tweetButtonFlg: false
+        });
     }
 
     //ツイートテキストを変更したときに反映させる
@@ -45,14 +63,16 @@ export default class TweetList extends Component {
                         <label >
                             Tweet
                         </label>
-                        <TextArea
+                        {this.errors}
+                        <TextArea 
                             value={this.state.tweetText}
                             onChange={this.onTextAreaChange}
                         />
                         <div style={{ paddingTop: '10px', textAlign: 'right' }}>
                             <Button
                                 onClick={this.onClickTweetButton}
-                                color="blue"
+                                color = "blue"
+                                disabled={this.state.tweetButtonFlg}
                             >
                                 Tweet
                             </Button >
