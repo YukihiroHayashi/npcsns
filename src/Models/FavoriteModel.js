@@ -20,7 +20,7 @@ export default class {
     getDataObject() {
         return {
             tweetId: this.tweetId,
-            favorite: this.favorite           
+            favorite: this.favorite
         }
     }
 }

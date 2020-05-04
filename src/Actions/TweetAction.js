@@ -4,13 +4,13 @@ export function tweetFetchData(url) {
     return (dispatch) => { //後でdispatchを調べる
         dispatch(tweetsSetLoadingError(false));
         dispatch(tweetsSetLoading(true));
-        let tweets  = {
-            data:{
+        let tweets = {
+            data: {
                 tweetId: 1,
                 userName: 'hoge',
             },
-            favoriteData:[],
-            replyData:{},
+            favoriteData: [],
+            replyData: {},
         };
         dispatch(tweetsFetchDataSuccess(tweets));
         dispatch(tweetsSetLoading(false));

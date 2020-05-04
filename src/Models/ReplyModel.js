@@ -20,7 +20,7 @@ export default class {
     getDataObject() {
         return {
             tweetId: this.tweetId,
-            reply: this.reply            
+            reply: this.reply
         }
     }
 }

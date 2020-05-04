@@ -30,7 +30,7 @@ export default class {
             tweetContent: this.tweetContent,
             favorite: this.favorite,
             reply: this.reply
-            
+
         }
     }
 }
