@@ -8,34 +8,27 @@ export default class Tweet extends Component {
         super(props);
     }
 
-    renderTable() {
-        const tweetbox = this.props.tweetList;
-    
-        const rows = tweetbox.map((tweetbox) =>
+    render(){
+        let tweetbox = this.props.tweetList;
+        let rows = tweetbox.map((x) =>
             <Table.Row>
                 <Table.Cell>
                     <Label >
                     <Icon name= "user circle" />
                     {this.props.userName}
                      </Label>
-                    <p>{tweetbox}</p>
+                    <p>{x}</p>
                 </Table.Cell>
             </Table.Row>
         );
-                                
-        return (
-          <Table >
-             <Table.Body>
-               {rows}
-             </Table.Body> 
-          </Table>
-        )
-    }
 
-    render(){
         return(
             <Segment>
-                {this.renderTable()}
+                <Table >
+                     <Table.Body>
+                       {rows}
+                     </Table.Body> 
+              </Table>
             </Segment>
         )
     }

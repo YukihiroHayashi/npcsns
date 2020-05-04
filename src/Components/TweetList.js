@@ -22,16 +22,16 @@ export default class TweetList extends Component {
     }
 
     //ツイート内容をTweetListに表示させるようにしたい
-    onClickTweetButton() {
-        const tweetList = this.state.tweetList;
-        const newTweetList = [this.state.tweetText];    
+    onClickTweetButton(evn, data) {
+        let tweetList = this.state.tweetList;
+        let newTweetList = [this.state.tweetText];    
         tweetList.push(newTweetList);
         this.setState({ tweetList: tweetList,tweetText: "" });
     }
 
     //ツイートテキストを変更したときに反映させる
-    onTextAreaChange(e){
-        this.setState({ tweetText: e.target.value });
+    onTextAreaChange(evn, data){
+        this.setState({ tweetText: data.value });
     }
     
     render(){
