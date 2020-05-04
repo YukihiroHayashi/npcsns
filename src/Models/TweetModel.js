@@ -33,4 +33,14 @@ export default class {
             
         }
     }
+
+    validate() {
+        let errors = {};
+        if (this.tweetContent == null || this.tweetContent == "") {
+            errors.tweetContent = "test!.";
+        }
+
+        return errors;
+    }
+
 }
