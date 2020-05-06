@@ -52,10 +52,14 @@
   width: 20%;
 }
 
+.trend-tweet {
+  width: 80%;
+}
+
 .tweetList {
-  width: 50%;
+  width: 65%;
 }
 
 .trend {
-  width: 30%;
+  width: 35%;
 }

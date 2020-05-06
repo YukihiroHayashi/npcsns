@@ -43,10 +43,7 @@ export class Load extends Component {
                         <div className="menu">
                             <MenuList />
                         </div>
-                        <div className="tweetList">
-                            <TweetList />
-                        </div>
-                        <div className="trend">
+                        <div className="trend-tweet">
                             <Trend />
                         </div>
                     </div>

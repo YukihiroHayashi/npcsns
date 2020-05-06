@@ -18,7 +18,7 @@ export default class TweetList extends Component {
             tweetText: "",　//ツイートテキスト
             tweetList: ["疲れすぎワロタ"],
             tweetButtonFlg: false,
-            errors:{}
+            errors:{},
         };
 
         //バインド
@@ -53,8 +53,16 @@ export default class TweetList extends Component {
         this.setState({ tweetText: data.value });
     }
 
+    getFilteredTweetList() {
+        return this.state.tweetList.filter(
+            x => (
+                (x ? x : "").includes(this.props.searchTrendText)
+            )
+        );
+    }
+
     render() {
-        let props = this.props;
+        let filteredTweetList = this.getFilteredTweetList();
 
         return (
             <Segment>
@@ -80,7 +88,7 @@ export default class TweetList extends Component {
                     </Form>
                 </div>
                 <Tweet
-                    tweetList={this.state.tweetList}
+                    tweetList={filteredTweetList}
                     userName={this.state.userName}
                 />
             </Segment>
