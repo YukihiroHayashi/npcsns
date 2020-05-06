@@ -39,7 +39,7 @@ export default class TweetList extends Component {
         }
 
         let tweetList = this.state.tweetList;
-        let newTweetList = [this.state.tweetText];
+        let newTweetList = this.state.tweetText;
         tweetList.push(newTweetList);
         this.setState({ 
             tweetList: tweetList,
