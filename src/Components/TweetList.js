@@ -37,7 +37,7 @@ export default class TweetList extends Component {
             this.setState({ errors: errors, });
         } else {
             let tweetList = this.state.tweetList;
-            let newTweetList = [this.state.tweetText];
+            let newTweetList = this.state.tweetText;
             tweetList.push(newTweetList);
             this.setState({
                 tweetList: tweetList,
@@ -73,7 +73,16 @@ export default class TweetList extends Component {
 
     }
 
+    getFilteredTweetList() {
+        return this.state.tweetList.filter(
+            x => (
+                (x ? x : "").includes(this.props.searchTrendText)
+            )
+        );
+    }
+
     render() {
+        let filteredTweetList = this.getFilteredTweetList();
         let props = this.props;
         let styleClear = { clear: 'both', };
         let errorMessage = Object.keys(this.state.errors).length > 0 ?
@@ -82,7 +91,6 @@ export default class TweetList extends Component {
                 {Object.keys(this.state.errors).map(k => (<p>{this.state.errors[k]}</p>))}
             </Message>
             : "";
-
 
         return (
             <Segment>
@@ -109,7 +117,7 @@ export default class TweetList extends Component {
                     </Form>
                 </div>
                 <Tweet
-                    tweetList={this.state.tweetList}
+                    tweetList={filteredTweetList}
                     userName={this.state.userName}
                 />
             </Segment>

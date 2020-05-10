@@ -34,3 +34,9 @@ export function tweetsFetchDataSuccess(tweets) {
         json: tweets,
     };
 }
+export function changeActiveMenu(activeMenu) {
+    return {
+        type: TweetConstant.MENU_ACT_CHANGEACTIVEMANU,
+        activeMenu: activeMenu
+    };
+}

@@ -3,12 +3,14 @@ import { bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { Segment, Menu, Label } from 'semantic-ui-react';
 import { mapStateToProps, mapDispatchToProps } from '../Load';
+import * as TweetAction from '../Actions/TweetAction';
+
 
 export class MenuList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeMenu: "",
+            activeMenu: "Home",
         }
 
         this.menuClick = this.menuClick.bind(this);
@@ -16,7 +18,9 @@ export class MenuList extends Component {
 
     menuClick(evn, data) {
         let activeMenu = data.name;
-        this.setState({ activeMenu: activeMenu });
+        this.setState({ activeMenu: activeMenu }, () => {
+            TweetAction.changeActiveMenu(this.state.activeMenu);
+        });
     }
 
     render() {

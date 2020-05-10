@@ -14,6 +14,7 @@ export class Load extends Component {
         super(props);
         this.state = {
             tweets: {},
+            activeMenu: "",
         }
     }
 
@@ -23,6 +24,8 @@ export class Load extends Component {
     }
 
     render() {
+        let activeMenu = this.props;
+
         return (
             <div className="app">
                 <Header as='h2' className="header" color="blue">
@@ -43,10 +46,7 @@ export class Load extends Component {
                         <div className="menu">
                             <MenuList />
                         </div>
-                        <div className="tweetList">
-                            <TweetList />
-                        </div>
-                        <div className="trend">
+                        <div className="trend-tweet">
                             <Trend />
                         </div>
                     </div>

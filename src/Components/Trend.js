@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { Segment, Input, Icon, Header, List, Label } from 'semantic-ui-react';
 import { mapStateToProps, mapDispatchToProps } from '../Load';
+import TweetList from './TweetList';
 
 export class Trend extends Component {
     constructor(props) {
@@ -45,51 +46,58 @@ export class Trend extends Component {
         ]
 
         return (
-            <Segment>
-                <Input
-                    placeholder='キーワード検索'
-                    icon={<Icon name='delete' link onClick={this.onSearchClearClick} />}
-                    value={this.state.searchTrendText} onChange={this.onSearchTrendChange}
-                />
+            <div className="flex">
+                <div className="tweetList">
+                    <TweetList searchTrendText={this.state.searchTrendText}/>
+                </div>
+                <div className="trend">
+                    <Segment>
+                        <Input
+                            placeholder='キーワード検索'
+                            icon={<Icon name='delete' link onClick={this.onSearchClearClick} />}
+                            value={this.state.searchTrendText} onChange={this.onSearchTrendChange}
+                        />
 
-                <Header as='h3' color="blue">
-                    <Icon name='star' />
-                    <Header.Content>おすすめトレンド</Header.Content>
-                </Header>
+                        <Header as='h3' color="blue">
+                            <Icon name='star' />
+                            <Header.Content>おすすめトレンド</Header.Content>
+                        </Header>
 
-                <List divided selection>
-                    <List.Item onClick={this.onTrendClick} trend="VS Code">
-                        <Label color='violet' horizontal>
-                            1位
+                        <List divided selection>
+                            <List.Item onClick={this.onTrendClick} trend="VS Code">
+                                <Label color='violet' horizontal>
+                                    1位
                         </Label>
                         VS Code
                     </List.Item>
-                    <List.Item onClick={this.onTrendClick} trend="Spring Boot">
-                        <Label color='blue' horizontal>
-                            2位
+                            <List.Item onClick={this.onTrendClick} trend="Spring Boot">
+                                <Label color='blue' horizontal>
+                                    2位
                         </Label>
                         Spring Boot
                     </List.Item>
-                    <List.Item onClick={this.onTrendClick} trend="Java">
-                        <Label color='teal' horizontal>
-                            3位
+                            <List.Item onClick={this.onTrendClick} trend="Java">
+                                <Label color='teal' horizontal>
+                                    3位
                         </Label>
                         Java
                     </List.Item>
-                    <List.Item onClick={this.onTrendClick} trend=".Net Framework">
-                        <Label color='grey' horizontal>
-                            4位
+                            <List.Item onClick={this.onTrendClick} trend=".Net Framework">
+                                <Label color='grey' horizontal>
+                                    4位
                         </Label>
                         .Net Framework
                     </List.Item>
-                    <List.Item onClick={this.onTrendClick} trend="React">
-                        <Label color='grey' horizontal>
-                            5位
+                            <List.Item onClick={this.onTrendClick} trend="React">
+                                <Label color='grey' horizontal>
+                                    5位
                         </Label>
                         React
                     </List.Item>
-                </List>
-            </Segment>
+                        </List>
+                    </Segment>
+                </div>
+            </div>
         )
     }
 }

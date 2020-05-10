@@ -7,8 +7,8 @@ import ReplyModel from '../Models/ReplyModel';
 const initialState = {
     tweetsIsLoadingError: false,
     tweetsIsLoading: true,
-    tweets: []
-
+    tweets: [],
+    activeMenu: "",
 }
 
 export default function tweetConstant(state = initialState, action) {
@@ -44,6 +44,11 @@ export default function tweetConstant(state = initialState, action) {
             } catch (e) {
                 throw "Data format is not valid. " + e.message;
             }
+        case TweetConstant.MENU_ACT_CHANGEACTIVEMANU:
+            let x = action.activeMenu;
+            return Object.assign({}, state, {
+                activeMenu: action.activeMenu,
+            });
         default:
             return state;
     }
