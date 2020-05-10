@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
-import { Segment, Table, Icon, Label } from 'semantic-ui-react';
+import { Segment, Table, Icon, Label, Container } from 'semantic-ui-react';
 
 export default class Tweet extends Component {
     constructor(props) {
@@ -10,6 +10,7 @@ export default class Tweet extends Component {
 
     render() {
         let tweetbox = this.props.tweetList;
+        let styleWideTable = { height: "60vh", overflowY: "scroll", };
         let rows = tweetbox.map((x) =>
             <Table.Row>
                 <Table.Cell>
@@ -17,18 +18,22 @@ export default class Tweet extends Component {
                         <Icon name="user circle" />
                         {this.props.userName}
                     </Label>
-                    <p>{x}</p>
+                    <Container>
+                        <p>{x}</p>
+                    </Container>
                 </Table.Cell>
             </Table.Row>
         );
 
         return (
             <Segment>
-                <Table >
-                    <Table.Body>
-                        {rows}
-                    </Table.Body>
-                </Table>
+                <div style={styleWideTable}>
+                    <Table fixed>
+                        <Table.Body>
+                            {rows}
+                        </Table.Body>
+                    </Table>
+                </div>
             </Segment>
         )
     }
