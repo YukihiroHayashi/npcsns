@@ -36,9 +36,16 @@ export default class {
 
     validate() {
         let errors = {};
-        if (this.tweetContent == null || this.tweetContent == "") {
-            errors.tweetContent = "test!.";
+        //NULL
+        if (this.tweetContent == null || this.tweetContent.trim() == "") {
+            errors.tweetContent = "何か入力おくんなまし";
         }
+        //文字数
+        if (this.tweetContent.length > 150) {
+            errors.tweetContent = "文字数オーバー.";
+        }
+
+
 
         return errors;
     }
