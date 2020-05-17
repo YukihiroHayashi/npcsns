@@ -10,13 +10,7 @@ export default class TweetList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tweetModel: this.props.tweetModel ? Object.assign(Object.create(this.props.tweetModel), this.props.tweetModel)
-                : new TweetModel(), // Store clone
-
-            tweetId: "", //ツイートID　Load.jsから取得する予定
-            userName: "watanabe", //ユーザ名　Load.jsから取得する予定
-            tweetText: "",　//ツイートテキスト
-            tweetList: ["疲れすぎワロタ"],
+            tweets: Object.assign(Object.create(this.props.filteredTweets), this.props.filteredTweets), // Store clone
             tweetButtonFlg: true,
             errors: {}
         };
@@ -29,19 +23,18 @@ export default class TweetList extends Component {
 
     //ツイート内容をTweetListに表示させるようにしたい
     onClickTweetButton(evn, data) {
+        let tweets = Object.assign(Object.create(this.state.tweets), this.state.tweets)
 
         //valid
-        let errors = this.createTweetDate();
+        let tweetNewModelData = this.createTweetDate();
+        let errors = tweetNewModelData.validate();
 
         if (Object.keys(errors).length > 0) {
             this.setState({ errors: errors, });
         } else {
-            let tweetList = this.state.tweetList;
-            let newTweetList = this.state.tweetText;
-            tweetList.push(newTweetList);
+            tweets.push(tweetNewModelData)
             this.setState({
-                tweetList: tweetList,
-                tweetText: "",
+                tweets: tweets,
                 tweetButtonFlg: true,
                 errors: {}
             });
@@ -49,14 +42,14 @@ export default class TweetList extends Component {
     }
 
     createTweetDate() {
-        let tweetNewModelData = this.state.tweetModel ? Object.assign(Object.create(this.state.tweetModel), this.state.tweetModel)
-            : new TweetModel() // Store clone
+        let tweetNewModelData = new TweetModel();
 
         tweetNewModelData.tweetContent = this.state.tweetText;
-        tweetNewModelData.userName = this.state.userName;
-        let errors = tweetNewModelData.validate();
-
-        return errors;
+        tweetNewModelData.userName = this.props.TweetReducer.loginUser;
+        tweetNewModelData.favorite = [];
+        tweetNewModelData.reply = {};
+        
+        return tweetNewModelData;
     }
 
     //ツイートテキストを変更したときに反映させる
@@ -73,17 +66,7 @@ export default class TweetList extends Component {
 
     }
 
-    getFilteredTweetList() {
-        return this.state.tweetList.filter(
-            x => (
-                (x ? x : "").includes(this.props.searchTrendText)
-            )
-        );
-    }
-
     render() {
-        let filteredTweetList = this.getFilteredTweetList();
-        let props = this.props;
         let styleClear = { clear: 'both', };
         let errorMessage = Object.keys(this.state.errors).length > 0 ?
             <Message warning style={styleClear}>
@@ -117,8 +100,8 @@ export default class TweetList extends Component {
                     </Form>
                 </div>
                 <Tweet
-                    tweetList={filteredTweetList}
-                    userName={this.state.userName}
+                    tweetList={this.state.tweets}
+                    userName={this.props.loginUser}
                 />
             </Segment>
         )

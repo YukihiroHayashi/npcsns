@@ -16,10 +16,10 @@ export default class Tweet extends Component {
                 <Table.Cell>
                     <Label >
                         <Icon name="user circle" />
-                        {this.props.userName}
+                        {x.userName}
                     </Label>
                     <Container>
-                        <p>{x}</p>
+                        <p>{x.tweetContent}</p>
                     </Container>
                 </Table.Cell>
             </Table.Row>

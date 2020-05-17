@@ -8,19 +8,27 @@ const initialState = {
     tweetsIsLoadingError: false,
     tweetsIsLoading: true,
     tweets: [],
-    activeMenu: "",
+    activeMenu: "Home",
+    loginUser: "",
 }
 
-export default function tweetConstant(state = initialState, action) {
+export default function TweetReducer(state = initialState, action) {
     switch (action.type) {
         case TweetConstant.TWEETS_ACT_ISLOADINGERROR:
             return Object.assign({}, state, {
                 tweetsIsLoadingError: action.tweetsIsLoadingError,
             });
+
         case TweetConstant.TWEETS_ACT_ISLOADING:
             return Object.assign({}, state, {
                 tweetsIsLoading: action.tweetsIsLoading,
             });
+
+        case TweetConstant.MENU_ACT_CHANGEACTIVEMANU:
+            return Object.assign({}, state, {
+                activeMenu: action.activeMenu,
+            });
+
         case TweetConstant.TWEETS_ACT_LOADINGSUCCESS:
             let tweets = [];
             try {
@@ -30,25 +38,18 @@ export default function tweetConstant(state = initialState, action) {
                 //Convert json to the instance
                 if (tweetsData.length > 0) {
                     for (let item of tweetsData) {
-                        let tweet = new TweetModel(item)
-                        tweet.favorite = action.json.FavoriteData.filter(x => x.tweetId == item.tweetId).map(x => new FavoriteModel(x));
-                        tweet.reply = action.json.ReplyData.filter(x => x.tweetId == item.tweetId).map(x => new ReplyModel(x));
-                        tweets.push(tweet);
+                        tweets.push(new TweetModel(item));
                     }
                 }
 
                 return Object.assign({}, state, {
                     tweets: tweets,
+                    loginUser: "watanabe",
                 });
 
             } catch (e) {
                 throw "Data format is not valid. " + e.message;
             }
-        case TweetConstant.MENU_ACT_CHANGEACTIVEMANU:
-            let x = action.activeMenu;
-            return Object.assign({}, state, {
-                activeMenu: action.activeMenu,
-            });
         default:
             return state;
     }

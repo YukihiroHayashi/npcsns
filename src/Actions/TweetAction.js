@@ -5,12 +5,15 @@ export function tweetFetchData(url) {
         dispatch(tweetsSetLoadingError(false));
         dispatch(tweetsSetLoading(true));
         let tweets = {
-            data: {
-                tweetId: 1,
-                userName: 'hoge',
-            },
-            favoriteData: [],
-            replyData: {},
+            data: [
+                {
+                    tweetId: 1,
+                    userName: "watanabe",
+                    tweetContent: "まじ卍",
+                    favorite: [ "hayashi", "nishimura", "fujita" ],
+                    reply: { name: "hayashi", value: "おつかれいのすけメンテン" },
+                }
+            ]
         };
         dispatch(tweetsFetchDataSuccess(tweets));
         dispatch(tweetsSetLoading(false));
@@ -37,6 +40,6 @@ export function tweetsFetchDataSuccess(tweets) {
 export function changeActiveMenu(activeMenu) {
     return {
         type: TweetConstant.MENU_ACT_CHANGEACTIVEMANU,
-        activeMenu: activeMenu
+        activeMenu: activeMenu,
     };
 }

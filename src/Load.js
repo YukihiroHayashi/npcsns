@@ -12,19 +12,13 @@ import * as TweetAction from './Actions/TweetAction';
 export class Load extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            tweets: {},
-            activeMenu: "",
-        }
     }
 
     componentDidMount() {
-        let tweets = this.props.TweetAction.tweetFetchData(AppConfig.ApiUrlTweet);
-        this.setState({ tweets: tweets });
+        this.props.TweetAction.tweetFetchData(AppConfig.ApiUrlTweet);
     }
 
     render() {
-        let activeMenu = this.props;
 
         return (
             <div className="app">
