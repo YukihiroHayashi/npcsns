@@ -12,7 +12,8 @@ export default class TweetList extends Component {
         this.state = {
             tweets: Object.assign(Object.create(this.props.filteredTweets), this.props.filteredTweets), // Store clone
             tweetButtonFlg: true,
-            errors: {}
+            errors: {},
+            
         };
 
         //バインド
@@ -23,7 +24,7 @@ export default class TweetList extends Component {
 
     //ツイート内容をTweetListに表示させるようにしたい
     onClickTweetButton(evn, data) {
-        let tweets = Object.assign(Object.create(this.state.tweets), this.state.tweets)
+        let tweets = Object.assign(Object.create(this.state.tweets), this.state.tweets);
 
         //valid
         let tweetNewModelData = this.createTweetDate();

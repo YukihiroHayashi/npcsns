@@ -96,6 +96,7 @@ export class Trend extends Component {
         )
     }
 }
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps

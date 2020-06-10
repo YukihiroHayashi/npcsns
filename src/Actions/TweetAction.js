@@ -11,7 +11,7 @@ export function tweetFetchData(url) {
                     userName: "watanabe",
                     tweetContent: "まじ卍",
                     favorite: [ "hayashi", "nishimura", "fujita" ],
-                    reply: { name: "hayashi", value: "おつかれいのすけメンテン" },
+                    reply: [{ name: "hayashi", value: "おつかれいのすけメンテン" }],
                 }
             ]
         };
