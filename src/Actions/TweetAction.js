@@ -43,3 +43,24 @@ export function changeActiveMenu(activeMenu) {
         activeMenu: activeMenu,
     };
 }
+export function addTweet(tweet) {
+    return {
+        type: TweetConstant.TWEETS_ACT_ADDTWEET,
+        tweet: tweet,
+    }
+}
+export function favorite(id, user) {
+    return {
+        type: TweetConstant.TWEETS_ACT_FAVORITE,
+        id: id,
+        user: user,
+    }
+}
+export function Reply(id, reply, user){
+    return {
+        type: TweetConstant.TWEETS_ACT_REPLY,
+        id: id,
+        reply: reply,
+        user: user,
+    }
+}

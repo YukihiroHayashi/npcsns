@@ -69,3 +69,8 @@
   border-color: #e0b4b4 !important;
   color: #9f3a38 !important;
 }
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}

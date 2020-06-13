@@ -30,7 +30,12 @@ export class Trend extends Component {
     }
 
     getFilteredTweetList(tweets) {
-        return tweets.filter(
+        let tweetsData = tweets;
+        if (this.props.TweetReducer.activeMenu == "Profile") {
+            tweetsData = tweetsData.filter(x => x.userName == this.props.TweetReducer.loginUser);
+        }
+
+        return tweetsData.filter(
             x => (
                 (x.tweetContent ? x.tweetContent : "").includes(this.state.searchTrendText)
             )

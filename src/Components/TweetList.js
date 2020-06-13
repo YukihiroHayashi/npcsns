@@ -5,14 +5,15 @@ import { Provider, connect } from 'react-redux';
 import { Segment, Form, TextArea, Button, Message } from 'semantic-ui-react';
 import Tweet from "./Tweet";
 import TweetModel from "../Models/TweetModel";
+import { mapStateToProps, mapDispatchToProps } from '../Load';
 
-export default class TweetList extends Component {
+export class TweetList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tweets: Object.assign(Object.create(this.props.filteredTweets), this.props.filteredTweets), // Store clone
             tweetButtonFlg: true,
             errors: {},
+            tweetText: "",
             
         };
 
@@ -24,8 +25,6 @@ export default class TweetList extends Component {
 
     //ツイート内容をTweetListに表示させるようにしたい
     onClickTweetButton(evn, data) {
-        let tweets = Object.assign(Object.create(this.state.tweets), this.state.tweets);
-
         //valid
         let tweetNewModelData = this.createTweetDate();
         let errors = tweetNewModelData.validate();
@@ -33,11 +32,11 @@ export default class TweetList extends Component {
         if (Object.keys(errors).length > 0) {
             this.setState({ errors: errors, });
         } else {
-            tweets.push(tweetNewModelData)
+            this.props.TweetAction.addTweet(tweetNewModelData);
             this.setState({
-                tweets: tweets,
                 tweetButtonFlg: true,
-                errors: {}
+                errors: {},
+                tweetText: "",
             });
         }
     }
@@ -46,7 +45,7 @@ export default class TweetList extends Component {
         let tweetNewModelData = new TweetModel();
 
         tweetNewModelData.tweetContent = this.state.tweetText;
-        tweetNewModelData.userName = this.props.TweetReducer.loginUser;
+        tweetNewModelData.userName = this.props.loginUser;
         tweetNewModelData.favorite = [];
         tweetNewModelData.reply = {};
         
@@ -101,11 +100,15 @@ export default class TweetList extends Component {
                     </Form>
                 </div>
                 <Tweet
-                    tweetList={this.state.tweets}
+                    tweetList = {this.props.filteredTweets}
                     userName={this.props.loginUser}
                 />
             </Segment>
         )
     }
-
 }
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TweetList);

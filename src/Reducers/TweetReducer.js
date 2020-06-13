@@ -13,6 +13,9 @@ const initialState = {
 }
 
 export default function TweetReducer(state = initialState, action) {
+    let tweets =    null;
+    let tweet = null;
+    
     switch (action.type) {
         case TweetConstant.TWEETS_ACT_ISLOADINGERROR:
             return Object.assign({}, state, {
@@ -30,7 +33,7 @@ export default function TweetReducer(state = initialState, action) {
             });
 
         case TweetConstant.TWEETS_ACT_LOADINGSUCCESS:
-            let tweets = [];
+            tweets = [];
             try {
                 //Get tweets (API will return the data in "data")
                 let tweetsData = action.json.data;
@@ -44,12 +47,44 @@ export default function TweetReducer(state = initialState, action) {
 
                 return Object.assign({}, state, {
                     tweets: tweets,
-                    loginUser: "watanabe",
+                    loginUser: "hayashi",
                 });
 
             } catch (e) {
                 throw "Data format is not valid. " + e.message;
             }
+
+        case TweetConstant.TWEETS_ACT_ADDTWEET:
+            tweets = [].concat(state.tweets);
+            tweets.push(action.tweet);
+            return Object.assign({}, state, {
+                tweets: tweets,
+            });
+        
+        case TweetConstant.TWEETS_ACT_FAVORITE:
+            tweets = [].concat(state.tweets);
+            tweet = tweets.find(x => x.tweetId = action.id);
+            let disTweet = tweet.favorite.filter(x => x == action.user);
+            if (disTweet.length <= 0){
+                tweet.favorite.push(action.user);
+            }else{
+                tweet.favorite = tweet.favorite.filter(x => x != action.user);
+            }
+            return Object.assign({}, state, {
+                tweets: tweets,
+            });
+    
+        case TweetConstant.TWEETS_ACT_REPLY:
+            tweets = [].concat(state.tweets);
+            tweet = tweets.find(x => x.tweetId = action.id);
+            tweet.reply.push({
+                name: action.user,
+                value: action.reply,
+            });
+            return Object.assign({}, state, {
+                tweets: tweets,
+            });
+
         default:
             return state;
     }
