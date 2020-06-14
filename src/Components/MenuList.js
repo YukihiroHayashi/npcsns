@@ -55,7 +55,7 @@ export class MenuList extends Component {
                     </Menu.Item>
                 </Menu>
                 <DraftModal
-                    activeMenu ={this.state.activeMenu}
+                    activeMenu ={this.props.TweetReducer.activeMenu}
                 />
             </Segment>
         )
