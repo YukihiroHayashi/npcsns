@@ -74,6 +74,8 @@ export class Tweet extends Component {
         let rows = this.props.tweetList.map((x) => {
             let favorite = x.favorite.length;
             let reply = x.reply.length;
+            let myFavo = x.favorite.filter(x => x.userName == this.props.userName);
+            let favoColor = myFavo.length > 0 ? "yellow" : ""; 
 
             return(
                 <Table.Row>
@@ -89,7 +91,7 @@ export class Tweet extends Component {
                                     id = {x.tweetId}
                                     onClick = {this.onOpenRepModal}
                                 />
-                                < Button circular icon='star' label={favorite}
+                                < Button circular color={favoColor} icon='star' label={favorite}
                                     id = {x.tweetId}
                                     onClick = {this.onClickFavo}
                                 />
