@@ -46,8 +46,6 @@ export class TweetList extends Component {
 
         tweetNewModelData.tweetContent = this.state.tweetText;
         tweetNewModelData.userName = this.props.loginUser;
-        tweetNewModelData.favorite = [];
-        tweetNewModelData.reply = {};
         
         return tweetNewModelData;
     }

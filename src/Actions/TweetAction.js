@@ -10,9 +10,32 @@ export function tweetFetchData(url) {
                     tweetId: 1,
                     userName: "watanabe",
                     tweetContent: "まじ卍",
-                    favorite: [ "hayashi", "nishimura", "fujita" ],
-                    reply: [{ name: "hayashi", value: "おつかれいのすけメンテン" }],
-                }
+                },
+            ],
+            reply: [
+                {
+                    tweetId: 1,
+                    reply: "おつかれいのすけメンテン",
+                    userName: "hayashi",
+                    replyDate: "2020/06/14",
+                },
+            ],
+            favorite: [
+                {
+                    tweetId: 1,
+                    userName: "hayashi",
+                    favoriteDate: "2020/06/14",
+                },
+                {
+                    tweetId: 1,
+                    userName: "nishimura",
+                    favoriteDate: "2020/06/14",
+                },
+                {
+                    tweetId: 1,
+                    userName: "fujita",
+                    favoriteDate: "2020/06/14",
+                },
             ]
         };
         dispatch(tweetsFetchDataSuccess(tweets));
@@ -49,18 +72,15 @@ export function addTweet(tweet) {
         tweet: tweet,
     }
 }
-export function favorite(id, user) {
+export function favorite(favorite) {
     return {
         type: TweetConstant.TWEETS_ACT_FAVORITE,
-        id: id,
-        user: user,
+        favorite: favorite,
     }
 }
-export function Reply(id, reply, user){
+export function Reply(reply){
     return {
         type: TweetConstant.TWEETS_ACT_REPLY,
-        id: id,
         reply: reply,
-        user: user,
     }
 }

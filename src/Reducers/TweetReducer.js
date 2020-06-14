@@ -41,7 +41,11 @@ export default function TweetReducer(state = initialState, action) {
                 //Convert json to the instance
                 if (tweetsData.length > 0) {
                     for (let item of tweetsData) {
-                        tweets.push(new TweetModel(item));
+                        let tweet = new TweetModel(item);
+                        tweet.reply = action.json.reply.filter(x => x.tweetId == item.tweetId).map(x => new ReplyModel(x));
+                        tweet.favorite = action.json.favorite.filter(x => x.tweetId == item.tweetId).map(x => new FavoriteModel(x));
+
+                        tweets.push(tweet);
                     }
                 }
 
@@ -63,12 +67,12 @@ export default function TweetReducer(state = initialState, action) {
         
         case TweetConstant.TWEETS_ACT_FAVORITE:
             tweets = [].concat(state.tweets);
-            tweet = tweets.find(x => x.tweetId = action.id);
-            let disTweet = tweet.favorite.filter(x => x == action.user);
+            tweet = tweets.find(x => x.tweetId = action.favorite.tweetId);
+            let disTweet = tweet.favorite.filter(x => x.userName == action.favorite.userName);
             if (disTweet.length <= 0){
-                tweet.favorite.push(action.user);
+                tweet.favorite.push(action.favorite);
             }else{
-                tweet.favorite = tweet.favorite.filter(x => x != action.user);
+                tweet.favorite = tweet.favorite.filter(x => x.userName != action.favorite.userName);
             }
             return Object.assign({}, state, {
                 tweets: tweets,
@@ -76,11 +80,8 @@ export default function TweetReducer(state = initialState, action) {
     
         case TweetConstant.TWEETS_ACT_REPLY:
             tweets = [].concat(state.tweets);
-            tweet = tweets.find(x => x.tweetId = action.id);
-            tweet.reply.push({
-                name: action.user,
-                value: action.reply,
-            });
+            tweet = tweets.find(x => x.tweetId = action.reply.tweetId);
+            tweet.reply.push(action.reply);
             return Object.assign({}, state, {
                 tweets: tweets,
             });

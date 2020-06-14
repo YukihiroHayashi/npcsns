@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
 import { Segment, Table, Icon, Label, Container, Button, Modal, Header, Input, TextArea, Form } from 'semantic-ui-react';
 import { mapStateToProps, mapDispatchToProps } from '../Load';
+import ReplyModel from '../Models/ReplyModel';
+import FavoriteModel from '../Models/FavoriteModel';
 
 export class Tweet extends Component {
     constructor(props) {
@@ -22,7 +24,11 @@ export class Tweet extends Component {
     }
 
     onClickFavo(evn, data) {
-        this.props.TweetAction.favorite(data.id, this.props.userName);
+        let favorite = new FavoriteModel({
+            tweetId: data.id,
+            userName: this.props.userName,
+        })
+        this.props.TweetAction.favorite(favorite);
     }
 
     onOpenRepModal(evn, data){
@@ -47,7 +53,12 @@ export class Tweet extends Component {
     }
 
     onClickRep(evn, data){
-        this.props.TweetAction.Reply(this.state.selectedId, this.state.replyMessage, this.props.userName);
+        let reply = new ReplyModel({
+            tweetId: this.state.selectedId,
+            reply: this.state.replyMessage,
+            userName: this.props.userName,
+        })
+        this.props.TweetAction.Reply(reply);
         this.setState({
             replyMessage: '',
             openRepModal: false,
