@@ -29,26 +29,26 @@ export class Trend extends Component {
         this.setState({ searchTrendText: data.trend })
     }
 
+    getFilteredTweetList(tweets) {
+        let tweetsData = tweets;
+        if (this.props.TweetReducer.activeMenu == "Profile") {
+            tweetsData = tweetsData.filter(x => x.userName == this.props.TweetReducer.loginUser);
+        }
+
+        return tweetsData.filter(
+            x => (
+                (x.tweetContent ? x.tweetContent : "").includes(this.state.searchTrendText)
+            )
+        );
+    }
+
     render() {
-        let trendOptions = [
-            { value: "", text: "" },
-            { value: "0422", text: "藤田大輝" },
-            { value: "0423", text: "林幸宏" },
-            { value: "0424", text: "有田健太郎" },
-            { value: "0425", text: "十川晴菜" },
-            { value: "0426", text: "渡辺大樹" },
-            { value: "0427", text: "西村歩美" },
-            { value: "vscode", text: "VS Code" },
-            { value: "java", text: "Java" },
-            { value: "springboot", text: "Spring Boot" },
-            { value: "react", text: "React" },
-            { value: ".netcore", text: ".Net Core" },
-        ]
+        let filteredTweets = this.getFilteredTweetList(this.props.TweetReducer.tweets);
 
         return (
             <div className="flex">
                 <div className="tweetList">
-                    <TweetList searchTrendText={this.state.searchTrendText}/>
+                    <TweetList filteredTweets={filteredTweets} loginUser={this.props.TweetReducer.loginUser} />
                 </div>
                 <div className="trend">
                     <Segment>
@@ -101,6 +101,7 @@ export class Trend extends Component {
         )
     }
 }
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps

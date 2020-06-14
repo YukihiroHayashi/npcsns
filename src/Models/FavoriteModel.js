@@ -2,14 +2,16 @@
 export default class {
     constructor(dataObject = null) {
         this.tweetId = "";
-        this.favorite = [];
-
+        this.userName = "";
+        this.favoriteDate = "";
 
         //Import data if set
         if (dataObject) {
             try {
                 this.tweetId = dataObject.tweetId;
-                this.favorite = dataObject.favorite;
+                this.userName = dataObject.userName;
+                this.favoriteDate = dataObject.favoriteDate;
+
             }
             catch (e) {
                 throw "Data import error @ TweetFavaorite data.";
@@ -20,7 +22,8 @@ export default class {
     getDataObject() {
         return {
             tweetId: this.tweetId,
-            favorite: this.favorite
+            userName: this.userName,
+            favoriteDate: this.favoriteDate,
         }
     }
 }

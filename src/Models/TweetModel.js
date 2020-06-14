@@ -5,7 +5,7 @@ export default class {
         this.userName = "";
         this.tweetContent = "";
         this.favorite = [];
-        this.reply = {};
+        this.reply = [];
 
 
         //Import data if set

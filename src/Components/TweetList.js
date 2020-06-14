@@ -5,58 +5,63 @@ import { Provider, connect } from 'react-redux';
 import { Segment, Form, TextArea, Button, Message } from 'semantic-ui-react';
 import Tweet from "./Tweet";
 import TweetModel from "../Models/TweetModel";
+import * as TweetAction from '../Actions/TweetAction';
+import { mapStateToProps, mapDispatchToProps } from '../Load';
 
-export default class TweetList extends Component {
+
+
+export  class TweetList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tweetModel: this.props.tweetModel ? Object.assign(Object.create(this.props.tweetModel), this.props.tweetModel)
-                : new TweetModel(), // Store clone
-
-            tweetId: "", //ツイートID　Load.jsから取得する予定
-            userName: "watanabe", //ユーザ名　Load.jsから取得する予定
-            tweetText: "",　//ツイートテキスト
-            tweetList: ["疲れすぎワロタ"],
             tweetButtonFlg: true,
-            errors: {}
+            errors: {},
+            tweetText: "",
+            
         };
 
         //バインド
         this.onClickTweetButton = this.onClickTweetButton.bind(this);
         this.onTextAreaChange = this.onTextAreaChange.bind(this);
+        this.onClickDraftButton = this.onClickDraftButton.bind(this);
 
     }
 
     //ツイート内容をTweetListに表示させるようにしたい
     onClickTweetButton(evn, data) {
-
         //valid
-        let errors = this.createTweetDate();
+        let tweetNewModelData = this.createTweetDate();
+        let errors = tweetNewModelData.validate();
 
         if (Object.keys(errors).length > 0) {
             this.setState({ errors: errors, });
         } else {
-            let tweetList = this.state.tweetList;
-            let newTweetList = this.state.tweetText;
-            tweetList.push(newTweetList);
+            this.props.TweetAction.addTweet(tweetNewModelData);
             this.setState({
-                tweetList: tweetList,
-                tweetText: "",
                 tweetButtonFlg: true,
-                errors: {}
+                errors: {},
+                tweetText: "",
             });
         }
     }
 
+    //textエリアの値を下書きに保存する
+    onClickDraftButton(evn, data) {
+        //Draftに保存するメソッドの作成
+        this.props.TweetAction.saveDraft(this.state.tweetText);
+        let b = this.props.TweetReducer.draft;
+
+        alert("下書きに保存しました。");
+    }
+
+
     createTweetDate() {
-        let tweetNewModelData = this.state.tweetModel ? Object.assign(Object.create(this.state.tweetModel), this.state.tweetModel)
-            : new TweetModel() // Store clone
+        let tweetNewModelData = new TweetModel();
 
         tweetNewModelData.tweetContent = this.state.tweetText;
-        tweetNewModelData.userName = this.state.userName;
-        let errors = tweetNewModelData.validate();
-
-        return errors;
+        tweetNewModelData.userName = this.props.loginUser;
+        
+        return tweetNewModelData;
     }
 
     //ツイートテキストを変更したときに反映させる
@@ -73,7 +78,7 @@ export default class TweetList extends Component {
 
     }
 
-    getFilteredTweetList() {
+    getFilteredTweetList(evn, data) {
         return this.state.tweetList.filter(
             x => (
                 (x ? x : "").includes(this.props.searchTrendText)
@@ -82,8 +87,6 @@ export default class TweetList extends Component {
     }
 
     render() {
-        let filteredTweetList = this.getFilteredTweetList();
-        let props = this.props;
         let styleClear = { clear: 'both', };
         let errorMessage = Object.keys(this.state.errors).length > 0 ?
             <Message warning style={styleClear}>
@@ -113,15 +116,25 @@ export default class TweetList extends Component {
                             >
                                 Tweet
                             </Button >
+                            <Button
+                                onClick={this.onClickDraftButton}
+                                disabled={this.state.tweetButtonFlg}
+                            >
+                                Draft
+                            </Button >
                         </div>
                     </Form>
                 </div>
                 <Tweet
-                    tweetList={filteredTweetList}
-                    userName={this.state.userName}
+                    tweetList = {this.props.filteredTweets}
+                    userName={this.props.loginUser}
                 />
             </Segment>
         )
     }
-
 }
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TweetList);

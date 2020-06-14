@@ -5,12 +5,38 @@ export function tweetFetchData(url) {
         dispatch(tweetsSetLoadingError(false));
         dispatch(tweetsSetLoading(true));
         let tweets = {
-            data: {
-                tweetId: 1,
-                userName: 'hoge',
-            },
-            favoriteData: [],
-            replyData: {},
+            data: [
+                {
+                    tweetId: 1,
+                    userName: "watanabe",
+                    tweetContent: "まじ卍",
+                },
+            ],
+            reply: [
+                {
+                    tweetId: 1,
+                    reply: "おつかれいのすけメンテン",
+                    userName: "hayashi",
+                    replyDate: "2020/06/14",
+                },
+            ],
+            favorite: [
+                {
+                    tweetId: 1,
+                    userName: "hayashi",
+                    favoriteDate: "2020/06/14",
+                },
+                {
+                    tweetId: 1,
+                    userName: "nishimura",
+                    favoriteDate: "2020/06/14",
+                },
+                {
+                    tweetId: 1,
+                    userName: "fujita",
+                    favoriteDate: "2020/06/14",
+                },
+            ]
         };
         dispatch(tweetsFetchDataSuccess(tweets));
         dispatch(tweetsSetLoading(false));
@@ -37,6 +63,30 @@ export function tweetsFetchDataSuccess(tweets) {
 export function changeActiveMenu(activeMenu) {
     return {
         type: TweetConstant.MENU_ACT_CHANGEACTIVEMANU,
-        activeMenu: activeMenu
+        activeMenu: activeMenu,
     };
+}
+export function addTweet(tweet) {
+    return {
+        type: TweetConstant.TWEETS_ACT_ADDTWEET,
+        tweet: tweet,
+    }
+}
+export function favorite(favorite) {
+    return {
+        type: TweetConstant.TWEETS_ACT_FAVORITE,
+        favorite: favorite,
+    }
+}
+export function Reply(reply){
+    return {
+        type: TweetConstant.TWEETS_ACT_REPLY,
+        reply: reply,
+    }
+}
+export function saveDraft(draft) {
+    return {
+        type: TweetConstant.SAVE_DRAFT,
+        draft: draft
+    }
 }
