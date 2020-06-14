@@ -5,9 +5,12 @@ import { Provider, connect } from 'react-redux';
 import { Segment, Form, TextArea, Button, Message } from 'semantic-ui-react';
 import Tweet from "./Tweet";
 import TweetModel from "../Models/TweetModel";
+import * as TweetAction from '../Actions/TweetAction';
 import { mapStateToProps, mapDispatchToProps } from '../Load';
 
-export class TweetList extends Component {
+
+
+export  class TweetList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,6 +23,7 @@ export class TweetList extends Component {
         //バインド
         this.onClickTweetButton = this.onClickTweetButton.bind(this);
         this.onTextAreaChange = this.onTextAreaChange.bind(this);
+        this.onClickDraftButton = this.onClickDraftButton.bind(this);
 
     }
 
@@ -40,6 +44,16 @@ export class TweetList extends Component {
             });
         }
     }
+
+    //textエリアの値を下書きに保存する
+    onClickDraftButton(evn, data) {
+        //Draftに保存するメソッドの作成
+        this.props.TweetAction.saveDraft(this.state.tweetText);
+        let b = this.props.TweetReducer.draft;
+
+        alert("下書きに保存しました。");
+    }
+
 
     createTweetDate() {
         let tweetNewModelData = new TweetModel();
@@ -62,6 +76,14 @@ export class TweetList extends Component {
             }
         });
 
+    }
+
+    getFilteredTweetList(evn, data) {
+        return this.state.tweetList.filter(
+            x => (
+                (x ? x : "").includes(this.props.searchTrendText)
+            )
+        );
     }
 
     render() {
@@ -93,6 +115,12 @@ export class TweetList extends Component {
                                 disabled={this.state.tweetButtonFlg}
                             >
                                 Tweet
+                            </Button >
+                            <Button
+                                onClick={this.onClickDraftButton}
+                                disabled={this.state.tweetButtonFlg}
+                            >
+                                Draft
                             </Button >
                         </div>
                     </Form>

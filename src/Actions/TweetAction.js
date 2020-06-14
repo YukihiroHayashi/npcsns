@@ -84,3 +84,9 @@ export function Reply(reply){
         reply: reply,
     }
 }
+export function saveDraft(draft) {
+    return {
+        type: TweetConstant.SAVE_DRAFT,
+        draft: draft
+    }
+}

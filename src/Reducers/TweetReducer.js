@@ -15,7 +15,6 @@ const initialState = {
 export default function TweetReducer(state = initialState, action) {
     let tweets =    null;
     let tweet = null;
-    
     switch (action.type) {
         case TweetConstant.TWEETS_ACT_ISLOADINGERROR:
             return Object.assign({}, state, {
@@ -85,7 +84,11 @@ export default function TweetReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 tweets: tweets,
             });
-
+        case TweetConstant.SAVE_DRAFT:
+            return Object.assign({}, state, {
+                draft: action.draft,
+            });
+            
         default:
             return state;
     }

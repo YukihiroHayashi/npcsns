@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
-import { Segment, Menu, Label } from 'semantic-ui-react';
+import { Segment, Menu, Label} from 'semantic-ui-react';
 import { mapStateToProps, mapDispatchToProps } from '../Load';
 import * as TweetAction from '../Actions/TweetAction';
+import { DraftModal } from './DraftModal';
 
 
 export class MenuList extends Component {
@@ -20,6 +21,7 @@ export class MenuList extends Component {
     render() {
 
         return (
+            
             <Segment>
                 <Menu fluid vertical>
                     <Menu.Item
@@ -52,6 +54,9 @@ export class MenuList extends Component {
                         下書き
                     </Menu.Item>
                 </Menu>
+                <DraftModal
+                    activeMenu ={this.state.activeMenu}
+                />
             </Segment>
         )
     }
@@ -60,3 +65,4 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(MenuList);
+
