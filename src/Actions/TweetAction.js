@@ -40,3 +40,10 @@ export function changeActiveMenu(activeMenu) {
         activeMenu: activeMenu
     };
 }
+
+export function saveDraft(draft) {
+    return {
+        type: TweetConstant.SAVE_DRAFT,
+        draft: draft
+    }
+}

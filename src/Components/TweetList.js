@@ -5,8 +5,12 @@ import { Provider, connect } from 'react-redux';
 import { Segment, Form, TextArea, Button, Message } from 'semantic-ui-react';
 import Tweet from "./Tweet";
 import TweetModel from "../Models/TweetModel";
+import * as TweetAction from '../Actions/TweetAction';
+import { mapStateToProps, mapDispatchToProps } from '../Load';
 
-export default class TweetList extends Component {
+
+
+export  class TweetList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,6 +28,7 @@ export default class TweetList extends Component {
         //バインド
         this.onClickTweetButton = this.onClickTweetButton.bind(this);
         this.onTextAreaChange = this.onTextAreaChange.bind(this);
+        this.onClickDraftButton = this.onClickDraftButton.bind(this);
 
     }
 
@@ -47,6 +52,16 @@ export default class TweetList extends Component {
             });
         }
     }
+
+    //textエリアの値を下書きに保存する
+    onClickDraftButton(evn, data) {
+        //Draftに保存するメソッドの作成
+        this.props.TweetAction.saveDraft(this.state.tweetText);
+        let b = this.props.TweetReducer.draft;
+
+        alert("下書きに保存しました。");
+    }
+
 
     createTweetDate() {
         let tweetNewModelData = this.state.tweetModel ? Object.assign(Object.create(this.state.tweetModel), this.state.tweetModel)
@@ -73,13 +88,16 @@ export default class TweetList extends Component {
 
     }
 
-    getFilteredTweetList() {
+    getFilteredTweetList(evn, data) {
         return this.state.tweetList.filter(
             x => (
                 (x ? x : "").includes(this.props.searchTrendText)
             )
         );
     }
+
+
+
 
     render() {
         let filteredTweetList = this.getFilteredTweetList();
@@ -113,6 +131,12 @@ export default class TweetList extends Component {
                             >
                                 Tweet
                             </Button >
+                            <Button
+                                onClick={this.onClickDraftButton}
+                                disabled={this.state.tweetButtonFlg}
+                            >
+                                Draft
+                            </Button >
                         </div>
                     </Form>
                 </div>
@@ -125,3 +149,8 @@ export default class TweetList extends Component {
     }
 
 }
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TweetList);
