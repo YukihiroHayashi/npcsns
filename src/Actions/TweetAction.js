@@ -90,3 +90,24 @@ export function saveDraft(draft) {
         draft: draft
     }
 }
+
+export function addTweetText(tweetText) {
+    return {
+        type: TweetConstant.ADD_TWEET_TEXT,
+        tweetText: tweetText
+    }
+}
+export function changeTweetButtonFlg(tweetButtonFlg) {
+    return {
+        type: TweetConstant.CHANGE_TWEET_BUTTON_FLG,
+        tweetButtonFlg: tweetButtonFlg
+    }
+}
+
+export function deleteDraft(draft) {
+    return {
+        type: TweetConstant.DELETE_DRAFT,
+        draft: draft
+    }
+}
+

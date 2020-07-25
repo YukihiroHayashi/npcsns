@@ -10,11 +10,15 @@ const initialState = {
     tweets: [],
     activeMenu: "Home",
     loginUser: "",
+    draft: [],
+    tweetText: "",
+    tweetButtonFlg: true
 }
 
 export default function TweetReducer(state = initialState, action) {
     let tweets =    null;
     let tweet = null;
+    let draft = null;
     switch (action.type) {
         case TweetConstant.TWEETS_ACT_ISLOADINGERROR:
             return Object.assign({}, state, {
@@ -85,10 +89,29 @@ export default function TweetReducer(state = initialState, action) {
                 tweets: tweets,
             });
         case TweetConstant.SAVE_DRAFT:
+            draft = [].concat(state.draft)
+            draft.push(action.draft);
             return Object.assign({}, state, {
-                draft: action.draft,
+                draft: draft,
             });
-            
+        
+        case TweetConstant.ADD_TWEET_TEXT:
+            return Object.assign({}, state, {
+                tweetText: action.tweetText,
+            });
+        
+        case TweetConstant.CHANGE_TWEET_BUTTON_FLG:
+            return Object.assign({}, state, {
+                tweetButtonFlg: action.tweetButtonFlg,
+            });
+        case TweetConstant.DELETE_DRAFT:
+            draft = [].concat(state.draft)
+            draft.pop(action.draft);
+            return Object.assign({}, state, {
+                draft: draft,
+            });
+
+
         default:
             return state;
     }

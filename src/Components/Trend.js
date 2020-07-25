@@ -67,9 +67,9 @@ export class Trend extends Component {
                             <List.Item onClick={this.onTrendClick} trend="VS Code">
                                 <Label color='violet' horizontal>
                                     1位
-                        </Label>
-                        VS Code
-                    </List.Item>
+                                </Label>
+                                VS Code
+                            </List.Item>
                             <List.Item onClick={this.onTrendClick} trend="Spring Boot">
                                 <Label color='blue' horizontal>
                                     2位

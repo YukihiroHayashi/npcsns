@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import { Segment, Menu, Label} from 'semantic-ui-react';
 import { mapStateToProps, mapDispatchToProps } from '../Load';
 import * as TweetAction from '../Actions/TweetAction';
-import { DraftModal } from './DraftModal';
+import DraftModal  from './DraftModal';
 
 
 export class MenuList extends Component {
@@ -19,6 +19,18 @@ export class MenuList extends Component {
     }
 
     render() {
+
+        let openDraftModalFlg = this.props.TweetReducer.activeMenu == "Draft" ? true : false
+        let draftCount = this.props.TweetReducer.draft.length
+        let draftLabel = ""
+        if (draftCount > 0) {
+             draftLabel = < Label color='blue' >{draftCount}</Label >
+        } else {
+             draftLabel = ""
+        }
+
+
+
 
         return (
             
@@ -51,11 +63,12 @@ export class MenuList extends Component {
                         active={this.props.TweetReducer.activeMenu == "Draft"}
                         onClick={this.menuClick}
                     >
+                        {draftLabel}
                         下書き
                     </Menu.Item>
                 </Menu>
                 <DraftModal
-                    activeMenu ={this.props.TweetReducer.activeMenu}
+                    openDraftModalFlg={openDraftModalFlg}
                 />
             </Segment>
         )

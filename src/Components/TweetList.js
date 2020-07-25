@@ -14,10 +14,7 @@ export  class TweetList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tweetButtonFlg: true,
-            errors: {},
-            tweetText: "",
-            
+            errors: {},   
         };
 
         //バインド
@@ -37,10 +34,10 @@ export  class TweetList extends Component {
             this.setState({ errors: errors, });
         } else {
             this.props.TweetAction.addTweet(tweetNewModelData);
+            this.props.TweetAction.addTweetText("");
+            this.props.TweetAction.changeTweetButtonFlg(true)
             this.setState({
-                tweetButtonFlg: true,
                 errors: {},
-                tweetText: "",
             });
         }
     }
@@ -48,17 +45,23 @@ export  class TweetList extends Component {
     //textエリアの値を下書きに保存する
     onClickDraftButton(evn, data) {
         //Draftに保存するメソッドの作成
-        this.props.TweetAction.saveDraft(this.state.tweetText);
-        let b = this.props.TweetReducer.draft;
+        this.props.TweetAction.saveDraft(this.props.TweetReducer.tweetText);
+        this.props.TweetAction.addTweetText("");
+        this.props.TweetAction.changeTweetButtonFlg(true);
 
         alert("下書きに保存しました。");
+        this.setState({
+            tweetButtonFlg: true,
+            errors: {},
+        });
+
     }
 
 
     createTweetDate() {
         let tweetNewModelData = new TweetModel();
 
-        tweetNewModelData.tweetContent = this.state.tweetText;
+        tweetNewModelData.tweetContent = this.props.TweetReducer.tweetText;
         tweetNewModelData.userName = this.props.loginUser;
         
         return tweetNewModelData;
@@ -66,17 +69,17 @@ export  class TweetList extends Component {
 
     //ツイートテキストを変更したときに反映させる
     onTextAreaChange(evn, data) {
-
-        this.setState({ tweetText: data.value }, () => {
-            //ボタンの非活性
-            if (this.state.tweetText != "") {
-                this.setState({ tweetButtonFlg: false });
-            } else {
-                this.setState({ tweetButtonFlg: true });
-            }
-        });
-
+        this.props.TweetAction.addTweetText(data.value);
+        //ボタンの非活性
+        if (data.value != "") {
+            this.props.TweetAction.changeTweetButtonFlg(false)
+        } else {
+            this.props.TweetAction.changeTweetButtonFlg(true)
+        }
     }
+
+
+
 
     getFilteredTweetList(evn, data) {
         return this.state.tweetList.filter(
@@ -94,6 +97,7 @@ export  class TweetList extends Component {
                 {Object.keys(this.state.errors).map(k => (<p>{this.state.errors[k]}</p>))}
             </Message>
             : "";
+        
 
         return (
             <Segment>
@@ -104,7 +108,7 @@ export  class TweetList extends Component {
                             Tweet
                         </label>
                         <TextArea
-                            value={this.state.tweetText}
+                            value={this.props.TweetReducer.tweetText}
                             onChange={this.onTextAreaChange}
                             className={this.state.errors.tweetContent ? "Error-Zone" : ""}
                         />
@@ -112,13 +116,13 @@ export  class TweetList extends Component {
                             <Button
                                 onClick={this.onClickTweetButton}
                                 color="blue"
-                                disabled={this.state.tweetButtonFlg}
+                                disabled={this.props.TweetReducer.tweetButtonFlg}
                             >
                                 Tweet
                             </Button >
                             <Button
                                 onClick={this.onClickDraftButton}
-                                disabled={this.state.tweetButtonFlg}
+                                disabled={this.props.TweetReducer.tweetButtonFlg}
                             >
                                 Draft
                             </Button >
